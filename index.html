@@ -8,12 +8,18 @@
     <script src="controller.js" type="module" defer></script>
 </head>
 <body>
-    <h1>Set:
-        <span id="setName">
-            woe
+    <h2>Current Set: 
+        <span id="currentSet" style="text-decoration: underline;">
         </span>
-    </h1>
-    <button id="reInitButton">Display a Card </button>
+    </h2>
+    
+    <div id="controls">
+        <label for="myTextBox">Enter Set Code:</label>
+        <input type="text" id="myTextBox" >
+        <button id="submitbutton">Submit</button>
+        <button id="next">Next</button>
+        <a href="./setsList.html">Set List</a>
+    </div>
     <img id="currentCard">
 
 </body>

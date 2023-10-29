@@ -1,21 +1,34 @@
 
 
-import{ getCardsInSet } from './dataFunctions.js'
+import{ getCardsInSet, getAllSets } from './dataFunctions.js'
 
-const setCode = 'lea';
+let setCode = '';
 let setCards;
 let hideInfo = true;
 let currectCard;
+let allSetNames;
+let currentSet;
 
 window.onload = async function() {
+    await initSetOptions();
     await initSet();
-
-    document.getElementById('reInitButton').addEventListener('click', handleClick);
+    document.getElementById('submitbutton').addEventListener('click', handleTextSubmit);
+    document.getElementById('next').addEventListener('click', handleClick);
 };
 
 async function initSet() {
     setCards = await getCardsInSet(setCode);
-    console.log(setCards);
+    for (let set of allSetNames) {
+        if (set.code === setCode) {
+            currentSet = set.name;
+        }
+    }
+    console.log(currentSet)
+    document.getElementById('currentSet').textContent = currentSet
+
+}
+async function initSetOptions() {
+    allSetNames = await getAllSets();
 }
 
 function handleClick() {
@@ -64,4 +77,9 @@ function setImageSource(imageId, imageUrl) {
     } else {
       console.error(`Image element with ID "${imageId}" not found.`);
     }
-  }
+}
+
+function handleTextSubmit() {
+    setCode = document.getElementById('myTextBox').value;
+    initSet();
+}
