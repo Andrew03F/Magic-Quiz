@@ -8,6 +8,7 @@ let hideInfo = true;
 let currectCard;
 let allSetNames;
 let currentSet;
+let sessionSeen = 0;
 
 window.onload = async function() {
     await initSetOptions();
@@ -34,6 +35,7 @@ async function initSetOptions() {
 function handleClick() {
     if (hideInfo) {
         currectCard = getNextCard();
+        incrementCounter();
         displayCardArt();
         hideInfo = !hideInfo;
     }
@@ -82,4 +84,9 @@ function setImageSource(imageId, imageUrl) {
 function handleTextSubmit() {
     setCode = document.getElementById('myTextBox').value;
     initSet();
+}
+function incrementCounter() {
+    sessionSeen += 1;
+    console.log(sessionSeen);
+    document.getElementById('counter').textContent = sessionSeen;
 }
