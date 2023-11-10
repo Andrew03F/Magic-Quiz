@@ -37,10 +37,11 @@ function handleClick() {
         currectCard = getNextCard();
         incrementCounter();
         displayCardArt();
+        clearPriceValues();
         hideInfo = !hideInfo;
     }
     else {
-        displayFullCard();
+        displayCardInfo();
         hideInfo = !hideInfo;
     }
 }
@@ -52,10 +53,24 @@ function displayCardArt() {
     setImageSource(imageId, imageUrl) ;
 }
 
-function displayFullCard() {
+function displayCardInfo() {
+    // display prices
+    document.getElementById('priceEUR').textContent = currectCard['prices']['eur'];
+    document.getElementById('priceUSD').textContent = currectCard['prices']['usd'];
+    document.getElementById('priceFoilUSD').textContent = currectCard['prices']['usd_etched'];
+    document.getElementById('priceEtchedUSD').textContent = currectCard['prices']['usd_foil'];
+    console.log(currectCard['prices']);
+
     let imageUrl = currectCard['image_uris']['normal'];
     let imageId = 'currentCard';
-    setImageSource(imageId, imageUrl) ;
+    setImageSource(imageId, imageUrl);
+}
+
+function clearPriceValues() {
+    document.getElementById('priceEUR').textContent = '';
+    document.getElementById('priceUSD').textContent = '';
+    document.getElementById('priceFoilUSD').textContent = '';
+    document.getElementById('priceEtchedUSD').textContent = '';
 }
 
 function getNextCard() {
