@@ -56,9 +56,10 @@ function displayCardArt() {
 function displayCardInfo() {
     // display prices
     document.getElementById('priceEUR').textContent = currectCard['prices']['eur'];
+    document.getElementById('priceFoilEUR').textContent = currectCard['prices']['eur_foil'];
     document.getElementById('priceUSD').textContent = currectCard['prices']['usd'];
-    document.getElementById('priceFoilUSD').textContent = currectCard['prices']['usd_etched'];
-    document.getElementById('priceEtchedUSD').textContent = currectCard['prices']['usd_foil'];
+    document.getElementById('priceFoilUSD').textContent = currectCard['prices']['usd_foil'];
+    document.getElementById('priceEtchedUSD').textContent = currectCard['prices']['usd_Etched'];
     console.log(currectCard['prices']);
 
     let imageUrl = currectCard['image_uris']['normal'];
