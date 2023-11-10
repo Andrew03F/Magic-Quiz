@@ -72,6 +72,7 @@ function clearPriceValues() {
     document.getElementById('priceUSD').textContent = '';
     document.getElementById('priceFoilUSD').textContent = '';
     document.getElementById('priceEtchedUSD').textContent = '';
+    document.getElementById('priceFoilEUR').textContent = '';
 }
 
 function getNextCard() {
