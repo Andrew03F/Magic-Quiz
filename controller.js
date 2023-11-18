@@ -5,7 +5,7 @@ import{ getCardsInSet, getAllSets } from './dataFunctions.js'
 let setCode = '';
 let setCards;
 let hideInfo = true;
-let currectCard;
+let currentCard;
 let allSetNames;
 let currentSet;
 let sessionSeen = 0;
@@ -34,10 +34,10 @@ async function initSetOptions() {
 
 function handleClick() {
     if (hideInfo) {
-        currectCard = getNextCard();
+        currentCard = getNextCard();
         incrementCounter();
+        clearPreviousValues();
         displayCardArt();
-        clearPriceValues();
         hideInfo = !hideInfo;
     }
     else {
@@ -47,32 +47,56 @@ function handleClick() {
 }
 
 function displayCardArt() {
-    console.log(currectCard);
-    let imageUrl = currectCard['image_uris']['art_crop'];
-    let imageId = 'currentCard';
-    setImageSource(imageId, imageUrl) ;
+    console.log(currentCard);
+    if(currentCard['image_uris']) {
+        let imageUrl = currentCard['image_uris']['art_crop'];
+        let imageId = 'currentCardFront';
+        setImageSource(imageId, imageUrl) ;
+    }
+    else if (currentCard['card_faces']){
+        console.log("multiple images");
+        let imageUrl = currentCard['card_faces'][0]['image_uris']['art_crop'];
+        let imageId = 'currentCardFront';
+        let imageUrlBack = currentCard['card_faces'][1]['image_uris']['art_crop'];
+        let imageIdBack = 'currentCardBack';
+        setImageSource(imageId, imageUrl);
+        setImageSource(imageIdBack, imageUrlBack);
+    }
 }
 
 function displayCardInfo() {
     // display prices
-    document.getElementById('priceEUR').textContent = currectCard['prices']['eur'];
-    document.getElementById('priceFoilEUR').textContent = currectCard['prices']['eur_foil'];
-    document.getElementById('priceUSD').textContent = currectCard['prices']['usd'];
-    document.getElementById('priceFoilUSD').textContent = currectCard['prices']['usd_foil'];
-    document.getElementById('priceEtchedUSD').textContent = currectCard['prices']['usd_Etched'];
-    console.log(currectCard['prices']);
+    document.getElementById('priceEUR').textContent = currentCard['prices']['eur'];
+    document.getElementById('priceFoilEUR').textContent = currentCard['prices']['eur_foil'];
+    document.getElementById('priceUSD').textContent = currentCard['prices']['usd'];
+    document.getElementById('priceFoilUSD').textContent = currentCard['prices']['usd_foil'];
+    document.getElementById('priceEtchedUSD').textContent = currentCard['prices']['usd_Etched'];
+    console.log(currentCard['prices']);
 
-    let imageUrl = currectCard['image_uris']['normal'];
-    let imageId = 'currentCard';
-    setImageSource(imageId, imageUrl);
+    if(currentCard['image_uris']) {
+        let imageUrl = currentCard['image_uris']['normal'];
+        let imageId = 'currentCardFront';
+        setImageSource(imageId, imageUrl) ;
+    }
+    else if (currentCard['card_faces']){
+        console.log("multiple images");
+        let imageUrl = currentCard['card_faces'][0]['image_uris']['normal'];
+        let imageId = 'currentCardFront';
+        let imageUrlBack = currentCard['card_faces'][1]['image_uris']['normal'];
+        let imageIdBack = 'currentCardBack';
+        setImageSource(imageId, imageUrl);
+        setImageSource(imageIdBack, imageUrlBack);
+    }
 }
 
-function clearPriceValues() {
+function clearPreviousValues() {
     document.getElementById('priceEUR').textContent = '';
     document.getElementById('priceUSD').textContent = '';
     document.getElementById('priceFoilUSD').textContent = '';
     document.getElementById('priceEtchedUSD').textContent = '';
     document.getElementById('priceFoilEUR').textContent = '';
+
+    setImageSource('currentCardBack', '');
 }
 
 function getNextCard() {
